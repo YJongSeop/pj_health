@@ -161,11 +161,11 @@ public class Calender extends CalendarDataManager{ // CalendarDataManager¿« GUI 
 			calOpGC.insets = new Insets(5,5,0,0);
 			calOpGC.anchor = GridBagConstraints.WEST;
 			calOpGC.fill = GridBagConstraints.NONE;
-			//calOpPanel.add(todayBut,calOpGC);
+			calOpPanel.add(todayBut,calOpGC);
 			calOpGC.gridwidth = 3;
 			calOpGC.gridx = 2;
 			calOpGC.gridy = 1;
-			//calOpPanel.add(todayLab,calOpGC);
+			calOpPanel.add(todayLab,calOpGC);
 			calOpGC.anchor = GridBagConstraints.CENTER;
 			calOpGC.gridwidth = 1;
 			calOpGC.gridx = 1;
