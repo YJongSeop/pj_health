@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 public class BMICalculator extends JFrame {
@@ -23,6 +24,7 @@ public class BMICalculator extends JFrame {
 	String BMI;
 	
 	Container contentPane;
+	private JTextField txtTest;
 	
 	public BMICalculator() {
 		try{
@@ -33,9 +35,10 @@ public class BMICalculator extends JFrame {
 		}
 		contentPane = getContentPane();
 		setTitle("BMI Calculator");
-		setSize(240, 300);
+		setSize(240, 286);
 		setVisible(true);
 		getContentPane().setLayout(null);
+		setResizable(false);
 		
 		JLabel lblNewLabel = new JLabel("\uD0A4 :");
 		lblNewLabel.setBounds(9, 43, 38, 15);
@@ -56,9 +59,10 @@ public class BMICalculator extends JFrame {
 		txt2.setColumns(10);
 		
 		JSlider bmiSlider = new JSlider();
+		bmiSlider.setMinimum(15);
 		bmiSlider.setEnabled(false);
 		bmiSlider.setValue(0);
-		bmiSlider.setMaximum(40);
+		bmiSlider.setMaximum(32);
 		bmiSlider.setBounds(9, 158, 200, 16);
 		getContentPane().add(bmiSlider);
 		
@@ -81,7 +85,7 @@ public class BMICalculator extends JFrame {
 				result_label2 = Double.parseDouble(String.format("%.2f", result_label));
 						
 				result_slide = Math.round((long)result_label);
-				//result_slide = Integer.parseInt(String.valueOf(Math.round(result_label)));
+				//result_slide = Integer.parseInt(String.valueOf(Math.round(result_label))); //테스트용
 				bmiSlider.setValue(result_slide);
 				
 				if(result_label < 18.5) {
@@ -150,6 +154,10 @@ public class BMICalculator extends JFrame {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new BMICalculator();
+		SwingUtilities.invokeLater(new Runnable(){
+			public void run(){
+				new BMICalculator();
+			}
+		});
 	}
 }

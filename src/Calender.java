@@ -15,6 +15,7 @@ class CalendarDataManager{ // 6*7배열에 나타낼 달력 값을 구하는 class
 	int calDayOfMon;
 	final int calLastDateOfMonth[]={31,28,31,30,31,30,31,31,30,31,30,31};
 	int calLastDate;
+	int CheckSum = 1;
 	Calendar today = Calendar.getInstance();
 	Calendar cal;
 	
@@ -96,6 +97,10 @@ public class Calender extends CalendarDataManager{ // CalendarDataManager의 GUI 
 		JButton saveBut; 
 		JButton delBut; 
 		JButton clearBut;
+		JRadioButton Radio1;
+		JRadioButton Radio2;
+		JRadioButton Radio3;
+		ButtonGroup Radio;
 	
 	JPanel frameBottomPanel;
 		JLabel bottomInfo = new JLabel("Welcome to Calendar!");
@@ -109,7 +114,7 @@ public class Calender extends CalendarDataManager{ // CalendarDataManager의 GUI 
 	final String DelButMsg2 = "작성되지 않았거나 이미 삭제된 memo입니다.";
 	final String DelButMsg3 = "<html><font color=red>ERROR : 파일 삭제 실패</html>";
 	final String ClrButMsg1 = "입력된 메모를 비웠습니다.";
-
+	
 	public static void main(String[] args){
 		SwingUtilities.invokeLater(new Runnable(){
 			public void run(){
@@ -121,7 +126,7 @@ public class Calender extends CalendarDataManager{ // CalendarDataManager의 GUI 
 		
 		mainFrame = new JFrame(title);
 		//mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.setSize(700,400);
+		mainFrame.setSize(820,400);
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setResizable(false);
 	//	mainFrame.setIconImage(icon.getImage());
@@ -243,11 +248,25 @@ public class Calender extends CalendarDataManager{ // CalendarDataManager의 GUI 
 						
 						String memo = memoArea.getText();
 						if(memo.length()>0){
-							BufferedWriter out = new BufferedWriter(new FileWriter("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+".txt"));
-							String str = memoArea.getText();
-							out.write(str);  
-							out.close();
-							bottomInfo.setText(calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+".txt"+SaveButMsg1);
+							if(CheckSum == 1) {
+								BufferedWriter out = new BufferedWriter(new FileWriter("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+"Type1"+".txt"));
+								String str = memoArea.getText();
+								out.write(str);  
+								out.close();
+								bottomInfo.setText(calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+"Type1"+".txt"+SaveButMsg1);
+							} else if(CheckSum == 2) {
+								BufferedWriter out = new BufferedWriter(new FileWriter("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+"Type2"+".txt"));
+								String str = memoArea.getText();
+								out.write(str);  
+								out.close();
+								bottomInfo.setText(calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+"Type2"+".txt"+SaveButMsg1);
+							} else if(CheckSum == 3) {
+								BufferedWriter out = new BufferedWriter(new FileWriter("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+"Type3"+".txt"));
+								String str = memoArea.getText();
+								out.write(str);  
+								out.close();
+								bottomInfo.setText(calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+"Type3"+".txt"+SaveButMsg1);
+							}
 						}
 						else 
 							bottomInfo.setText(SaveButMsg2);
@@ -261,12 +280,29 @@ public class Calender extends CalendarDataManager{ // CalendarDataManager의 GUI 
 			delBut.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
 					memoArea.setText("");
-					File f =new File("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+".txt");
-					if(f.exists()){
-						f.delete();
-						showCal();
-						bottomInfo.setText(DelButMsg1);
+					if(CheckSum == 1) {
+						File f =new File("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+"Type1"+".txt");
+						if(f.exists()){
+							f.delete();
+							showCal();
+							bottomInfo.setText(DelButMsg1);
+						}
+					} else if(CheckSum == 2) {
+						File f =new File("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+"Type2"+".txt");
+						if(f.exists()){
+							f.delete();
+							showCal();
+							bottomInfo.setText(DelButMsg1);
+						}
+					} else if(CheckSum == 3) {
+						File f =new File("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+"Type3"+".txt");
+						if(f.exists()){
+							f.delete();
+							showCal();
+							bottomInfo.setText(DelButMsg1);
+						}
 					}
+					
 					else 
 						bottomInfo.setText(DelButMsg2);					
 				}					
@@ -278,9 +314,49 @@ public class Calender extends CalendarDataManager{ // CalendarDataManager의 GUI 
 					bottomInfo.setText(ClrButMsg1);
 				}
 			});
+			Radio1 = new JRadioButton("식단");
+			Radio1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					JRadioButton e = (JRadioButton)arg0.getSource();
+					if(e.getText().equals("식단")) {
+						CheckSum = 1;
+						bottomInfo.setText("식단 모드로 변경합니다.");
+						readMemo();
+					}
+				}
+			});
+			Radio2 = new JRadioButton("계획");
+			Radio2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					JRadioButton e = (JRadioButton)arg0.getSource();
+					if(e.getText().equals("계획")) {
+						CheckSum = 2;
+						bottomInfo.setText("계획 모드로 변경합니다.");
+						readMemo();
+					}
+				}
+			});
+			Radio3 = new JRadioButton("메모");
+			Radio3.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					JRadioButton e = (JRadioButton)arg0.getSource();
+					if(e.getText().equals("메모")) {
+						CheckSum = 3;
+						bottomInfo.setText("메모 모드로 변경합니다.");
+						readMemo();
+					}
+				}
+			});
+			Radio = new ButtonGroup();
 			memoSubPanel.add(saveBut);
 			memoSubPanel.add(delBut);
 			memoSubPanel.add(clearBut);
+			memoSubPanel.add(Radio1);
+			memoSubPanel.add(Radio2);
+			memoSubPanel.add(Radio3);
+			Radio.add(Radio1);
+			Radio.add(Radio2);
+			Radio.add(Radio3);
 			memoPanel.setLayout(new BorderLayout());
 			memoPanel.add(selectedDate, BorderLayout.NORTH);
 			memoPanel.add(memoAreaSP,BorderLayout.CENTER);
@@ -333,17 +409,48 @@ public class Calender extends CalendarDataManager{ // CalendarDataManager의 GUI 
 	}
 	private void readMemo(){
 		try{
-			File f = new File("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+".txt");
-			if(f.exists()){
-				BufferedReader in = new BufferedReader(new FileReader("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+".txt"));
-				String memoAreaText= new String();
-				while(true){
-					String tempStr = in.readLine();
-					if(tempStr == null) break;
-					memoAreaText = memoAreaText + tempStr + System.getProperty("line.separator");
+			if(CheckSum == 1) {
+				memoArea.setText("");
+				File f = new File("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+"Type1"+".txt");
+					if(f.exists()){
+						BufferedReader in = new BufferedReader(new FileReader("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+"Type1"+".txt"));
+						String memoAreaText= new String();
+						while(true){
+							String tempStr = in.readLine();
+							if(tempStr == null) break;
+							memoAreaText = memoAreaText + tempStr + System.getProperty("line.separator");
+						}
+						memoArea.setText(memoAreaText);
+						in.close();	
+					}
+			} else if(CheckSum == 2) {
+				memoArea.setText("");
+				File f = new File("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+"Type2"+".txt");
+				if(f.exists()){
+					BufferedReader in = new BufferedReader(new FileReader("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+"Type2"+".txt"));
+					String memoAreaText= new String();
+					while(true){
+						String tempStr = in.readLine();
+						if(tempStr == null) break;
+						memoAreaText = memoAreaText + tempStr + System.getProperty("line.separator");
+					}
+					memoArea.setText(memoAreaText);
+					in.close();	
 				}
-				memoArea.setText(memoAreaText);
-				in.close();	
+			} else if(CheckSum == 3) {
+				memoArea.setText("");
+				File f = new File("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+"Type3"+".txt");
+				if(f.exists()){
+					BufferedReader in = new BufferedReader(new FileReader("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDayOfMon<10?"0":"")+calDayOfMon+"Type3"+".txt"));
+					String memoAreaText= new String();
+					while(true){
+						String tempStr = in.readLine();
+						if(tempStr == null) break;
+						memoAreaText = memoAreaText + tempStr + System.getProperty("line.separator");
+					}
+					memoArea.setText(memoAreaText);
+					in.close();	
+				}
 			}
 			else memoArea.setText("");
 		} catch (IOException e) {
@@ -357,12 +464,32 @@ public class Calender extends CalendarDataManager{ // CalendarDataManager의 GUI 
 				if(j==0) fontColor="red";
 				else if(j==6) fontColor="blue";
 				
-				File f =new File("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDates[i][j]<10?"0":"")+calDates[i][j]+".txt");
-				if(f.exists()){
-					dateButs[i][j].setText("<html><b><font color="+fontColor+">"+calDates[i][j]+"</font></b></html>");
+				dateButs[i][j].setText("<html><font color="+fontColor+">"+calDates[i][j]+"</font></html>");
+				
+				if(CheckSum == 1) {
+					File f =new File("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDates[i][j]<10?"0":"")+calDates[i][j]+"Type1"+".txt");
+					if(f.exists()){
+						dateButs[i][j].setText("<html><b><font color="+fontColor+">"+calDates[i][j]+"</font></b></html>");
+					}
+					else dateButs[i][j].setText("<html><font color="+fontColor+">"+calDates[i][j]+"</font></html>");
 				}
-				else dateButs[i][j].setText("<html><font color="+fontColor+">"+calDates[i][j]+"</font></html>");
-
+				
+				if(CheckSum == 2) {
+					File f =new File("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDates[i][j]<10?"0":"")+calDates[i][j]+"Type2"+".txt");
+					if(f.exists()){
+						dateButs[i][j].setText("<html><b><font color="+fontColor+">"+calDates[i][j]+"</font></b></html>");
+					}
+					else dateButs[i][j].setText("<html><font color="+fontColor+">"+calDates[i][j]+"</font></html>");
+				}
+				
+				if(CheckSum == 3) {
+					File f =new File("MemoData/"+calYear+((calMonth+1)<10?"0":"")+(calMonth+1)+(calDates[i][j]<10?"0":"")+calDates[i][j]+"Type3"+".txt");
+					if(f.exists()){
+						dateButs[i][j].setText("<html><b><font color="+fontColor+">"+calDates[i][j]+"</font></b></html>");
+					}
+					else dateButs[i][j].setText("<html><font color="+fontColor+">"+calDates[i][j]+"</font></html>");
+				}
+				
 				JLabel todayMark = new JLabel("<html><font color=green>*</html>");
 				dateButs[i][j].removeAll();
 				if(calMonth == today.get(Calendar.MONTH) &&
@@ -419,6 +546,8 @@ public class Calender extends CalendarDataManager{ // CalendarDataManager의 GUI 
 			
 			selectedDate.setText("<Html><font size=3>"+(calMonth+1)+"/"+calDayOfMon+"/"+calYear+"&nbsp;("+dDayString+")</html>");
 			
+			CheckSum = 0;
+			bottomInfo.setText(calYear+"년 "+calMonth+"월 "+calDayOfMon+"일을 선택하셨습니다. 모드를 골라주세요.");
 			readMemo();
 		}
 	}
@@ -440,6 +569,7 @@ public class Calender extends CalendarDataManager{ // CalendarDataManager의 GUI 
 					infoClock.setText(amPm+" "+hour+":"+min+":"+sec);
 
 					sleep(1000);
+	
 					String infoStr = bottomInfo.getText();
 					
 					if(infoStr != " " && (msgCntFlag == false || curStr != infoStr)){
@@ -453,7 +583,8 @@ public class Calender extends CalendarDataManager{ // CalendarDataManager의 GUI 
 							msgCntFlag = false;
 							bottomInfo.setText(" ");
 						}
-					}		
+					}	
+					
 				}
 				catch(InterruptedException e){
 					System.out.println("Thread:Error");

@@ -45,8 +45,8 @@ public class main_home extends JFrame {
 	public main_home() {
 		
 		try{
-			//UIManager.setLookAndFeel ("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"); //LookAndFeel Windows 스타일 적용
-			//SwingUtilities.updateComponentTreeUI(mainFrame) ;
+			UIManager.setLookAndFeel ("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"); //LookAndFeel Windows 스타일 적용
+			SwingUtilities.updateComponentTreeUI(myPanel) ;
 		}catch(Exception e){
 			bottomInfo.setText("ERROR : LookAndFeel setting failed");
 		}
@@ -98,12 +98,12 @@ public class main_home extends JFrame {
 		myPanel.setLayout(null);
 		
 		JLabel lb_Today = new JLabel("Today : ");
-		lb_Today.setBounds(12, 12, 43, 18);
+		lb_Today.setBounds(12, 12, 61, 18);
 		myPanel.add(lb_Today);
 		
 		JLabel lb_Today_Value = new JLabel();
 		lb_Today_Value.setToolTipText("현재 시간");
-		lb_Today_Value.setBounds(67, 12, 115, 18);
+		lb_Today_Value.setBounds(63, 12, 115, 18);
 		myPanel.add(lb_Today_Value);
 		lb_Today_Value.setText(todate);
 		
@@ -117,9 +117,40 @@ public class main_home extends JFrame {
 		myPanel.add(separator);
 		
 		JPanel panel_todayDiet = new JPanel();
-		panel_todayDiet.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "\uC624\uB298\uC758 \uC2DD\uB2E8", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_todayDiet.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Today Diet", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
 		panel_todayDiet.setBounds(12, 49, 170, 206);
 		myPanel.add(panel_todayDiet);
+		panel_todayDiet.setLayout(null);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setEnabled(false);
+		textArea.setEditable(false);
+		textArea.setBounds(3, 17, 164, 186);
+		panel_todayDiet.add(textArea);
+		
+		JPanel panel_todayPlan = new JPanel();
+		panel_todayPlan.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Today Plan", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
+		panel_todayPlan.setBounds(194, 49, 216, 206);
+		myPanel.add(panel_todayPlan);
+		panel_todayPlan.setLayout(null);
+		
+		JTextArea textArea_1 = new JTextArea();
+		textArea_1.setEnabled(false);
+		textArea_1.setEditable(false);
+		textArea_1.setBounds(3, 17, 210, 185);
+		panel_todayPlan.add(textArea_1);
+		
+		JPanel panel_todayMemo = new JPanel();
+		panel_todayMemo.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Today Memo", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
+		panel_todayMemo.setBounds(422, 49, 170, 206);
+		myPanel.add(panel_todayMemo);
+		panel_todayMemo.setLayout(null);
+		
+		JTextArea textArea_2 = new JTextArea();
+		textArea_2.setEnabled(false);
+		textArea_2.setEditable(false);
+		textArea_2.setBounds(3, 18, 164, 185);
+		panel_todayMemo.add(textArea_2);
 		
 	}
 	
@@ -142,6 +173,10 @@ public class main_home extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		new main_home();
+		SwingUtilities.invokeLater(new Runnable(){
+			public void run(){
+				new main_home();
+			}
+		});
 	}
 }
