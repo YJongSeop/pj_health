@@ -1,7 +1,6 @@
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
 import java.awt.event.*;
 import javax.swing.event.*;
 import java.text.*;

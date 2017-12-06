@@ -103,9 +103,9 @@ public class Calender extends CalendarDataManager{ // CalendarDataManager의 GUI 
 		ButtonGroup Radio;
 	
 	JPanel frameBottomPanel;
-		JLabel bottomInfo = new JLabel("Welcome to Calendar!");
+		JLabel bottomInfo = new JLabel("달력에 오신것을 환영합니다.");
 	//상수, 메세지
-	final String WEEK_DAY_NAME[] = { "SUN", "MON", "TUE", "WED", "THR", "FRI", "SAT" };
+	final String WEEK_DAY_NAME[] = { "日", "月", "火", "水", "木", "金", "土" };
 	final String title = "Calender";
 	final String SaveButMsg1 = "를 MemoData폴더에 저장하였습니다.";
 	final String SaveButMsg2 = "메모를 먼저 작성해 주세요.";
