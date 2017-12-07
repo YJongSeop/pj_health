@@ -21,6 +21,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JButton;
@@ -57,6 +58,7 @@ public class main_home extends JFrame {
 	JTextArea textArea3;
 	
 	public static void main(String[] args) {
+		LoadUserInfo();
 		SwingUtilities.invokeLater(new Runnable(){
 			public void run(){
 				new main_home();
@@ -65,9 +67,8 @@ public class main_home extends JFrame {
 	}
 	
 	public main_home() {
-		
 		try{
-			//UIManager.setLookAndFeel ("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"); //LookAndFeel Windows 스타일 적용
+			UIManager.setLookAndFeel ("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"); //LookAndFeel Windows 스타일 적용
 			SwingUtilities.updateComponentTreeUI(myPanel) ;
 		}catch(Exception e){
 			bottomInfo.setText("ERROR : LookAndFeel setting failed");
@@ -106,19 +107,19 @@ public class main_home extends JFrame {
 		
 		JMenuItem mnMenu_Nut = new JMenuItem("측정");
 		mnMenu_Info2.add(mnMenu_Nut);
+		mnMenu_Nut.addActionListener(action);
 		
 		JMenuItem mnMenu_NutInfo = new JMenuItem("정보");
 		mnMenu_Info2.add(mnMenu_NutInfo);
-		
-		JMenuItem mnMenu_TodayDiet = new JMenuItem("식단");
-		mnMenu.add(mnMenu_TodayDiet);
+		mnMenu_NutInfo.addActionListener(action);
 		
 		JMenuItem mnMenu_Calender = new JMenuItem("달력");
 		mnMenu_Calender.addActionListener(action);
 		
-		JMenuItem mnMenu_BMICalculator = new JMenuItem("BMI \uACC4\uC0B0\uAE30");
+		JMenuItem mnMenu_BMICalculator = new JMenuItem("BMI 계산기");
 		mnMenu.add(mnMenu_BMICalculator);
 		mnMenu.add(mnMenu_Calender);
+		mnMenu_BMICalculator.addActionListener(action);
 		myPanel.setLayout(null);
 		
 		JLabel lb_Today = new JLabel("Today : ");
@@ -205,7 +206,7 @@ public class main_home extends JFrame {
 		btReload.setBounds(515, 12, 77, 23);
 		myPanel.add(btReload);
 		
-		ThreadControl threadCnl = new ThreadControl();
+		ThreadControl threadCnl = new ThreadControl(); //스레드 시작, 현재 시간 표시
 		threadCnl.start();
 		
 		CheckMainMethod();
@@ -263,6 +264,37 @@ public class main_home extends JFrame {
 		
 	}
 	
+	private static void LoadUserInfo() {
+		try {
+			File f = new File("User.txt");
+			if(f.exists()) {
+				BufferedReader in = new BufferedReader(new FileReader("User.txt"));
+				String line = null;
+				String[] splitedStr = null;
+				while((line = in.readLine()) != null) {
+					splitedStr = null;
+					splitedStr = line.split("\t");
+					for(int i = 0; i < splitedStr.length; i++) {
+						splitedStr[i] = splitedStr[i].trim();
+					}
+				}
+				in.close();
+			} else {
+				JOptionPane.showConfirmDialog(null, "데이터가 없습니다. 가입서를 작성해주세요.", "알림", JOptionPane.WARNING_MESSAGE);
+				if(JOptionPane.YES_OPTION == 0) {
+					SwingUtilities.invokeLater(new Runnable(){
+						public void run(){
+							new sign_form();
+						}
+					});
+				}
+				else System.exit(0);
+			}
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	class MyActionListener implements ActionListener {
 		public void actionPerformed (ActionEvent e) {
 			JMenuItem it = (JMenuItem)e.getSource();
@@ -270,13 +302,19 @@ public class main_home extends JFrame {
 				new Calender();
 			}
 			if(it.getText().equals("개인정보 확인")) {
-				new sign_form();
+				new sign_form_readonly();
 			}
 			if(it.getText().equals("개인정보 수정")) {
-				new sign_form_readonly();
+				new sign_form_modify();
 			}
 			if(it.getText().equals("BMI 계산기")) {
 				new BMICalculator();					
+			}
+			if(it.getText().equals("정보")) {
+				new NutrientDB();
+			}
+			if(it.getText().equals("측정")) {
+				new NutrientProc();
 			}
 		}
 	}

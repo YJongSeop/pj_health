@@ -1,7 +1,9 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -16,17 +18,19 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-public class sign_form extends JFrame {
+public class sign_form_modify extends JFrame {
 	 JPanel contentPane;
 	 JTextField txt1;
 	 JTextField txt2;
 	 JTextField txt3;
 	 JTextField txt4;
 	 JTextField txt5;
+	 
+	 String[] info;
 
-	public sign_form() {
+	public sign_form_modify() {
 		setResizable(false);
-		setTitle("회원가입 폼");
+		setTitle("회원정보 변경폼");
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 297, 242);
 		setVisible(true);
@@ -42,7 +46,31 @@ public class sign_form extends JFrame {
 			//bottomInfo.setText("ERROR : LookAndFeel setting failed");
 		}
 		
-		JLabel labelTop = new JLabel("회원가입 정보 입력창");
+		try {
+			File f = new File("Users.txt");
+			BufferedReader reader = new BufferedReader(new FileReader("Users.txt"));
+			
+			String line = null;
+			String[] splitedStr = null;
+			while((line = reader.readLine()) != null) {
+				splitedStr = null;
+				splitedStr = line.split("\t");
+				
+				for(int i = 0; i < splitedStr.length; i++) {
+					splitedStr[i] = splitedStr[i].trim();
+					splitedStr[i] = info[i];
+				}
+			}
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		txt1.setText(info[0]);
+		txt2.setText(info[1]);
+		txt3.setText(info[2]);
+		txt4.setText(info[3]);
+		txt5.setText(info[4]);
+		
+		JLabel labelTop = new JLabel("회원 정보 변경하기");
 		labelTop.setHorizontalAlignment(SwingConstants.CENTER);
 		labelTop.setBounds(0, 0, 281, 18);
 		contentPane.add(labelTop);
@@ -63,7 +91,7 @@ public class sign_form extends JFrame {
 		label_3.setBounds(12, 112, 55, 18);
 		contentPane.add(label_3);
 		
-		JLabel label_5 = new JLabel("섭취 불가 음식 :");
+		JLabel label_5 = new JLabel("기타사항 :");
 		label_5.setBounds(12, 143, 104, 18);
 		contentPane.add(label_5);
 		
@@ -92,7 +120,7 @@ public class sign_form extends JFrame {
 		contentPane.add(txt5);
 		txt5.setColumns(10);
 		
-		JButton button_Left = new JButton("가입");
+		JButton button_Left = new JButton("수정");
 		button_Left.setBounds(41, 176, 98, 28);
 		contentPane.add(button_Left);
 		button_Left.addActionListener(new ActionListener() {
@@ -137,7 +165,7 @@ public class sign_form extends JFrame {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable(){
 			public void run(){
-				new sign_form();
+				new sign_form_modify();
 			}
 		});
 	}

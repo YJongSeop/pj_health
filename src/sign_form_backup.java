@@ -1,46 +1,41 @@
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JCheckBox;
+import javax.swing.JTextField;
+import javax.swing.JTextArea;
+import javax.swing.JButton;
 
-public class sign_form extends JFrame {
+public class sign_form_backup extends JFrame {
+
 	 JPanel contentPane;
 	 JTextField txt1;
 	 JTextField txt2;
 	 JTextField txt3;
 	 JTextField txt4;
 	 JTextField txt5;
+	 JScrollPane scrollPane;
 
-	public sign_form() {
+	public sign_form_backup() {
 		setResizable(false);
 		setTitle("회원가입 폼");
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 297, 242);
+		setBounds(100, 100, 297, 413);
 		setVisible(true);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		try{
-			UIManager.setLookAndFeel ("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"); //LookAndFeel Windows 스타일 적용
-			SwingUtilities.updateComponentTreeUI(getContentPane()) ;
-		}catch(Exception e){
-			//bottomInfo.setText("ERROR : LookAndFeel setting failed");
-		}
 		
 		JLabel labelTop = new JLabel("회원가입 정보 입력창");
 		labelTop.setHorizontalAlignment(SwingConstants.CENTER);
@@ -63,9 +58,41 @@ public class sign_form extends JFrame {
 		label_3.setBounds(12, 112, 55, 18);
 		contentPane.add(label_3);
 		
+		JLabel label_4 = new JLabel("알레르기 :");
+		label_4.setBounds(12, 140, 75, 18);
+		contentPane.add(label_4);
+		
 		JLabel label_5 = new JLabel("섭취 불가 음식 :");
-		label_5.setBounds(12, 143, 104, 18);
+		label_5.setBounds(12, 197, 104, 18);
 		contentPane.add(label_5);
+		
+		JLabel label_6 = new JLabel("기타 사항 :");
+		label_6.setBounds(12, 225, 75, 18);
+		contentPane.add(label_6);
+		
+		JCheckBox ck1 = new JCheckBox("유제품");
+		ck1.setBounds(77, 136, 64, 26);
+		contentPane.add(ck1);
+		
+		JCheckBox ck2 = new JCheckBox("생선류");
+		ck2.setBounds(149, 136, 64, 26);
+		contentPane.add(ck2);
+		
+		JCheckBox ck3 = new JCheckBox("갑각류");
+		ck3.setBounds(217, 136, 64, 26);
+		contentPane.add(ck3);
+		
+		JCheckBox ck4 = new JCheckBox("과일류");
+		ck4.setBounds(77, 164, 64, 26);
+		contentPane.add(ck4);
+		
+		JCheckBox ck5 = new JCheckBox("견과류");
+		ck5.setBounds(149, 164, 64, 26);
+		contentPane.add(ck5);
+		
+		JCheckBox ck6 = new JCheckBox("초콜렛");
+		ck6.setBounds(217, 164, 64, 26);
+		contentPane.add(ck6);
 		
 		txt1 = new JTextField();
 		txt1.setBounds(79, 28, 202, 22);
@@ -88,38 +115,22 @@ public class sign_form extends JFrame {
 		contentPane.add(txt4);
 		
 		txt5 = new JTextField();
-		txt5.setBounds(108, 142, 173, 22);
+		txt5.setBounds(108, 196, 173, 22);
 		contentPane.add(txt5);
 		txt5.setColumns(10);
 		
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(12, 253, 261, 49);
+		contentPane.add(textArea);
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
+		
 		JButton button_Left = new JButton("가입");
-		button_Left.setBounds(41, 176, 98, 28);
+		button_Left.setBounds(43, 312, 98, 28);
 		contentPane.add(button_Left);
-		button_Left.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String St_txt1 = txt1.getText();
-				String St_txt2 = txt2.getText();
-				String St_txt3 = txt3.getText();
-				String St_txt4 = txt4.getText();
-				String St_txt5 = txt5.getText();
-				
-				String info = St_txt1 + "\t" + St_txt2 + "\t" + St_txt3 + "\t" + St_txt4 + "\t" + St_txt5;
-				try {
-				File f = new File("Users.txt");
-					if(info.length() > 0) {
-						BufferedWriter out = new BufferedWriter(new FileWriter("Users.txt"));
-						out.write(info);
-						out.close();
-					}
-				} catch (IOException e2) {
-					e2.printStackTrace();
-				}
-				JOptionPane.showMessageDialog(null, "가입 완료", "알림", JOptionPane.INFORMATION_MESSAGE);
-			}
-		});
 		
 		JButton button_Right = new JButton("초기화");
-		button_Right.setBounds(147, 176, 98, 28);
+		button_Right.setBounds(149, 312, 98, 28);
 		contentPane.add(button_Right);
 		button_Right.addActionListener(new ActionListener() {
 			public void actionPerformed (ActionEvent e) {
@@ -127,17 +138,31 @@ public class sign_form extends JFrame {
 				txt2.setText(null);
 				txt3.setText(null);
 				txt4.setText(null);
-				txt5.setText(null);			
+				txt5.setText(null);
+				
+				ck1.setSelected(false);
+				ck2.setSelected(false);
+				ck3.setSelected(false);
+				ck4.setSelected(false);
+				ck5.setSelected(false);
+				ck6.setSelected(false);
+				
+				textArea.setText(null);
+				
 				JOptionPane.showMessageDialog(null, "내용을 초기화 하였습니다.", "알림", JOptionPane.INFORMATION_MESSAGE, null);
 			}
 		});
+		
+		scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(12, 253, 279, 50);
+		contentPane.add(scrollPane);
 	}
 	
 	
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable(){
 			public void run(){
-				new sign_form();
+				new sign_form_backup();
 			}
 		});
 	}

@@ -9,9 +9,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.Font;
 
 public class NutrientDB  extends JFrame{
 	String[] listValues = new String[] {"탄수화물", "지방", "단백질", "무기염류", "비타민 A", "비타민 D", 
@@ -24,25 +26,33 @@ public class NutrientDB  extends JFrame{
 	JTextArea textArea;
 	
 	public NutrientDB() {
-		setSize(520,401);
+		setSize(600,500);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setTitle("영양소 사전");
 		getContentPane().setLayout(null);
 		
-		JLabel topInfo = new JLabel("<html>영양소 사전에 오신것을 환영합니다! 주요 영양소에 대한 정보를 알 수 있습니다."
-				+ "<br><br> 원하는 목차를 클릭하면 해당 영양소에 대한 정보를 보여줍니다. </html>");
-		topInfo.setBounds(12, 12, 490, 59);
+		try{
+			UIManager.setLookAndFeel ("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"); //LookAndFeel Windows 스타일 적용
+			SwingUtilities.updateComponentTreeUI(getContentPane());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		JLabel topInfo = new JLabel("<html>영양소 사전에 오신것을 환영합니다. 주요 영양소에 대한 정보를 알 수 있습니다."
+				+ "<br> 원하는 목차를 클릭하면 해당 영양소에 대한 정보를 보여줍니다. </html>");
+		topInfo.setBounds(12, 10, 490, 43);
 		getContentPane().add(topInfo);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "내용", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
-		panel.setBounds(158, 71, 344, 269);
+		panel.setBounds(158, 63, 424, 398);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		textArea = new JTextArea();
+		textArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
 		textArea.setEditable(false);
 		textArea.setWrapStyleWord(true);
 		textArea.setLineWrap(true);
@@ -50,7 +60,7 @@ public class NutrientDB  extends JFrame{
 		panel.add(textArea);
 		
 		scrollPane = new JScrollPane(textArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(3, 17, 341, 250);
+		scrollPane.setBounds(3, 19, 418, 376);
 		scrollPane.setAutoscrolls(false);
 		panel.add(scrollPane);
 		
@@ -123,7 +133,7 @@ public class NutrientDB  extends JFrame{
 					+ "그러나 출혈에 의한 빈혈, 성장기 등에서는 수요가 커서 흡수율도 좋아진다. 태아는 출산 전에 간에 철을 저장해 둔다. 하지만 수유기간이 너무 길면 철 저장이 고갈되어 빈혈을 일으킨다. 성인의 필요량은 1일 10mg 정도이며, 출혈성 질환·월경개시기·임신·출산·성장기에는 수요가 높아져 음식의 종류에 주의하지 않으면 결핍되기 쉽다. \n\n"
 					+ "아이오딘은 갑상선에 대부분이 모여 그 호르몬의 구성 성분이다. 바다에서 떨어진 내륙지방에서는 아이오딘의 결핍으로 갑상선 기능이 마비되어, 지방병성 갑상선종이 다발한다. 아메리카 내륙의 주(州)에서는 법령으로 식염에 아이오딘염(鹽)을 혼입시켜 질병을 예방하고 있다. 한국인은 아이오딘이 풍부한 해조류를 먹고, 음료수에도 아이오딘이 함유되어 있어서 아이오딘 결핍 현상이 적다.\n\n"
 					+ "구리·망가니즈·아연은 모두 동물실험에서 필수불가결한 원소임이 판명되었다. 그러나 극히 미량만 있으면 족하기 때문에 인간에게서는 결핍이 나타나지 않는다. 구리가 결핍되면 헤모글로빈의 생성이 줄어들어 빈혈을 일으킨다. 망가니즈가 결핍되면 동물은 생식능력을 잃고, 아연이 결핍되면 성장하는 데에 지장을 받는다.\n\n"
-					+ "크로뮴이 모자랄 경우, 좀 더 정확히는 장기간 수액으로만 영양을 섭취한 사람들에게서 나타날 경우, 심각한 내당능 장애, 체중 감소를 일으키며,  몰리브덴이 모자랄 경우, 이란 - 중국 북부(베이징도 포함된다!)에서 식도암의 발병율이 높아진다는 논문이 있으며, 바나듐은 닭과 쥐에서 실험을 한 결과 모자르면 성장이 느려지고 생식능력이 저하된다는 결과가 있다.\n\n"
+					+ "크로뮴이 모자랄 경우, 좀 더 정확히는 장기간 수액으로만 영양을 섭취한 사람들에게서 나타날 경우, 심각한 내당능 장애, 체중 감소를 일으키며,  몰리브덴이 모자랄 경우, 이란 - 중국 북부(베이징도 포함된다)에서 식도암의 발병율이 높아진다는 논문이 있으며, 바나듐은 닭과 쥐에서 실험을 한 결과 모자르면 성장이 느려지고 생식능력이 저하된다는 결과가 있다.\n\n"
 					+ "플루오린이 음료수 속에 적당량(100만분의 1 정도) 있으면 충치가 적다는 통계 가 있다. 그래서 외국에서는 수돗물에 플루오린화물을 가하는 곳도 있다. 그러나 물 속에 플루오린의 함량이 과다하면 반상치(斑狀齒)라 하여 이(齒)의 표면에 반점이 생기고 약해진다. 오늘날에는 특히 어린이들의 치아에 플루오린을 도포하여 충치를 예방한다. 게다가 플루오린은 원소 중 가장 큰 반응성을 보이는 물질만큼이나 엄청난 독성을 지닌다."
 					);
 					textArea.setSelectionStart(0);
@@ -179,7 +189,7 @@ public class NutrientDB  extends JFrame{
 					+ "비타민 B 복합체는 신체에서 각종 물질 대사에 작용하는 물질들이다. 물론 이중에서 체내 합성이 가능한 것들은 실질적으로 비타민으로 취급하지 않으며, 따라서 비타민 B 복합체의 결번들을 이룬다. \n\n"
 					+ "비타민B복합체는 여러 수용성 비타민의 복합체로서, 세포의 물질 대사를 돕는 조효소의 역할을 하는 것으로 알려져 있다. 일본에서는 비타민 B군(群)이라고 부른다. \n\n"
 					+ "복합체라고 불리는 이유는, 원래 비타민 B 복합체를 구성하는 물질들, 즉 물질 대사의 조효소 역할을 하는 비타민B라는 하나의 물질이 존재한다고 추정되어 비타민 B로 명명되었기 때문이며, 이후 연구를 통하여 여러 복합적인 물질들이 물질 대사에 관여하는 것이 밝혀져, 비타민 B의 역할, 즉 세포 대사에 관여 하는 수용성 조효소를 묶어 분류한 것이 비타민 B 복합체다. \n\n"
-					+ "채식주의자들에게는 다른 비타민보다 특히 결핍되기 쉬운 비타민인데, B1로 분류되는 티아민은 정말 짧은 체내 반감기로 엄청나게 부실한 저장성을 자랑한다. 그리고 B12는 인체에서 합성되지 않고, 이걸 합성이 가능한 생물은 효모 내지는 일부의 해조류, 그리고 고기를 통해 섭취하는 것 말곤 답이 없다. 식물 중에서 일부 해조류에도 존재는 하지만 대부분의 해조류는 이성질체인 pseudovitamin B12으로, 이것은 인간을 포함한 포유류에서는 불활성되어 생물학적으로 사용이 불가능, 동시에 섭취시 비타민 B12의 흡수를 방해한다. 김 종류에 상당량 있긴 하지만 서구권에서는 동양권 요리로 접하지 않는이상 김을 먹을 가능성이 없다! 이때문에 효모 추출물(마마이트 등)이나 비타민 영양제로 따로 섭취해 반드시 보충해야한다. \n\n"
+					+ "채식주의자들에게는 다른 비타민보다 특히 결핍되기 쉬운 비타민인데, B1로 분류되는 티아민은 정말 짧은 체내 반감기로 엄청나게 부실한 저장성을 자랑한다. 그리고 B12는 인체에서 합성되지 않고, 이걸 합성이 가능한 생물은 효모 내지는 일부의 해조류, 그리고 고기를 통해 섭취하는 것 말곤 답이 없다. 식물 중에서 일부 해조류에도 존재는 하지만 대부분의 해조류는 이성질체인 pseudovitamin B12으로, 이것은 인간을 포함한 포유류에서는 불활성되어 생물학적으로 사용이 불가능, 동시에 섭취시 비타민 B12의 흡수를 방해한다. 김 종류에 상당량 있긴 하지만 서구권에서는 동양권 요리로 접하지 않는이상 김을 먹을 가능성이 없다. 이때문에 효모 추출물(마마이트 등)이나 비타민 영양제로 따로 섭취해 반드시 보충해야한다. \n\n"
 					+ "인체에는 물질 대사기능의 증진 및 보조, 피부 및 근육 조직의 유지, 면역 및 신경 작용 증진, 혈구 및 세포 성장, 암 예방에 도움을 준다."
 					);
 					textArea.setSelectionStart(0);
@@ -190,7 +200,7 @@ public class NutrientDB  extends JFrame{
 					+ "하루 10mg만 먹어도 괴혈병을 예방할 수 있으며 60mg이면 4~6주 동안 괴혈병을 방지할 수 있다고 한다. 모 실험에선 20대남성 기준 200mg이 최적량이라고 하기도 한다. 밑에 후술하겠지만 고용량 비타민c 용법에선 하루에 무려 3g~12g(보통 6~10g사이)의 비타민c를 먹어야한다고 주장하기도 한다.\n\n" 
 					+ "수용성이기 때문에 다량 섭취해도 신체에 저장되지 않으며, 소모되고 남는 것은 소변으로 빠져나가 버리기 때문에 지용성 비타민에 비해 과량섭취해도 안전하다. 그래도 고용량 요법 같은 과다복용시엔 부작용을 겪을 수 있는데 대표적인게 설사나 속쓰림 또는 방귀 정도이지만 요로결석의 위험성을 증가시킨다는 연구들도 존재한다. 치사량도 있긴한데 11,900mg/kg. 60kg의 성인이라면 714g, 즉 레모나 3500개 분량 혹은 비타500 1428개 분량. 걱정할건 없는게 후자의 경우 1/10을 채 먹기 전에 물중독으로 사망한다. \n\n"
 					+ "비타민C가 관여하는 에너지 대사 작용은 주로 낮에 일어나기 때문에 취침하는 밤보다는 낮에 섭취하는 것이 더 좋다고 한다. 또 수용성이라 몇 시간 후면 체외로 배출되기 때문에 몇시간 간격으로 식후에 나눠먹는 것이 좋다. \n\n"
-					+ "특유의 오각형 고리 구조 때문에 약 70도 이상의 열을 가하면 구조가 깨진다. 햇빛에 말려도 마찬가지고, 갈아서 먹더라도 채소 내의 비타민C 분해 효소인 아스코르비나아제가 비타민C를 파괴한다! 오이의 경우가 대표적이다. 이 때문에 채소를 갈아먹는 것보다 되도록이면 날 것으로 먹는게 좋다. \n\n"
+					+ "특유의 오각형 고리 구조 때문에 약 70도 이상의 열을 가하면 구조가 깨진다. 햇빛에 말려도 마찬가지고, 갈아서 먹더라도 채소 내의 비타민C 분해 효소인 아스코르비나아제가 비타민C를 파괴한다. 오이의 경우가 대표적이다. 이 때문에 채소를 갈아먹는 것보다 되도록이면 날 것으로 먹는게 좋다. \n\n"
 					+ "자연계에도 흔히 존재하고, 음료 등에 첨가되는 안식향산나트륨과 반응하여 1급 발암물질인 벤젠으로 합성될 수 있기 때문에, 이 사실이 대중에게 잘 알려진 2006년경 논란이 되었던 적이 있으나, 벤젠의 주요 섭취경로나 위험도를 생각해봤을 때 이러한 섭취경로가 인간에게 영향을 주기는 어렵다고 알려져 있다. \n\n"
 					+ "한편 동물 중에는 인간이나 기니피그 정도를 제외하고는 세포 내 포도당을 비타민C로 바꾸는 유전자가 들어있다. 인간의 경우 진화과정에서 그 유전자가 탈락했기 때문에 괴혈병에 걸린다고. 그렇기 때문에 인간을 제외한 육식동물이 채식을 하지 않고서도 살 수 있는 이유 중 하나다. \n\n"
 					+ "비타민C의 부족은 괴혈병(Scurvy)을 유발할 수 있다. 20세기 초까지만 해도 비타민 C의 존재 자체가 알려져 있지 않았고, 주요한 비타민 C의 공급원인 신선한 과일과 채소를 제대로 섭취하기가 어려웠기 때문에 해군이나 선원들을 중심으로 괴혈병이 창궐하였다. 오늘날에는 비교적 과일과 채소가 흔하며 비타민 제제도 존재하므로 비타민 C를 구하는 것 자체는 쉬우나, 이런저런 이유 때문에 올바른 식생활을 하기가 어려운 사람들도 많다. \n\n"
@@ -205,7 +215,7 @@ public class NutrientDB  extends JFrame{
 		getContentPane().add(list);
 		
 		pane = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		pane.setBounds(13, 74, 140, 268);
+		pane.setBounds(12, 63, 140, 178);
 		getContentPane().add(pane);
 		
 		
