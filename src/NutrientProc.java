@@ -660,7 +660,7 @@ public class NutrientProc extends JFrame {
 	}
 	private Connection ConnectDB() {
 		String Driver = "com.mysql.jdbc.Driver";
-		String URL = "jdbc:mysql://localhost/sampledb?characterEncoding=euc-kr&user=root&password=root";
+		String URL = "jdbc:mysql://localhost/dbnutrient?characterEncoding=euc-kr&user=root&password=root";
 		String USER = "root";
 		String PASS = "root";
 		try {
