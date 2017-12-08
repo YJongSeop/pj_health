@@ -56,7 +56,9 @@ public class sign_form_readonly extends JFrame {
 				reader.close();
 			}
 		} catch(IOException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "유저 정보가 존재하지 않습니다! 가입해주세요.", "에러", JOptionPane.ERROR_MESSAGE, null);
+			if(JOptionPane.OK_OPTION == 0)
+				dispose();
 		}
 		txt1.setText(info[0]);
 		txt2.setText(info[1]);

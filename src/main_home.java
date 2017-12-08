@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -24,7 +25,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.JButton;
 
 class DateData {
 	Calendar today = Calendar.getInstance();
@@ -265,33 +265,19 @@ public class main_home extends JFrame {
 	}
 	
 	private static void LoadUserInfo() {
-		try {
-			File f = new File("User.txt");
-			if(f.exists()) {
-				BufferedReader in = new BufferedReader(new FileReader("User.txt"));
-				String line = null;
-				String[] splitedStr = null;
-				while((line = in.readLine()) != null) {
-					splitedStr = null;
-					splitedStr = line.split("\t");
-					for(int i = 0; i < splitedStr.length; i++) {
-						splitedStr[i] = splitedStr[i].trim();
+		File f = new File("User.txt");
+		if(f.exists()) {
+			
+		} else {
+			int result = JOptionPane.showConfirmDialog(null, "데이터가 없습니다. 가입서를 작성해주세요.", "알림", JOptionPane.WARNING_MESSAGE);
+			if(result == 0) {
+				SwingUtilities.invokeLater(new Runnable(){
+					public void run(){
+						new sign_form();
 					}
-				}
-				in.close();
-			} else {
-				JOptionPane.showConfirmDialog(null, "데이터가 없습니다. 가입서를 작성해주세요.", "알림", JOptionPane.WARNING_MESSAGE);
-				if(JOptionPane.YES_OPTION == 0) {
-					SwingUtilities.invokeLater(new Runnable(){
-						public void run(){
-							new sign_form();
-						}
-					});
-				}
-				else System.exit(0);
+				});
 			}
-		} catch(IOException e) {
-			e.printStackTrace();
+			else if (result == 2) System.exit(0);
 		}
 	}
 	
