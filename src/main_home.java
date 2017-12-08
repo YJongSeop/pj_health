@@ -271,7 +271,7 @@ public class main_home extends JFrame {
 	}
 	
 	private static void LoadUserInfo() {
-<<<<<<< HEAD
+
 		try {
 			File f = new File("Users.txt");
 			if(f.exists()) {
@@ -285,23 +285,10 @@ public class main_home extends JFrame {
 					for(int i = 0; i < info.length; i++) {
 						info[i] = info[i].trim();
 						str= info[i];
-=======
-		File f = new File("User.txt");
-		if(f.exists()) {
-			
-		} else {
-			int result = JOptionPane.showConfirmDialog(null, "데이터가 없습니다. 가입서를 작성해주세요.", "알림", JOptionPane.WARNING_MESSAGE);
-			if(result == 0) {
-				SwingUtilities.invokeLater(new Runnable(){
-					public void run(){
-						new sign_form();
->>>>>>> branch 'master' of https://github.com/YJongSeop/pj_health
 					}
-<<<<<<< HEAD
 				}
-				reader.close();
 			} else {
-				JOptionPane.showConfirmDialog(null, "데이터가 없습니다. 가입서를 작성해주세요.", "알림", JOptionPane.WARNING_MESSAGE);
+				int result = JOptionPane.showConfirmDialog(null, "데이터가 없습니다. 가입서를 작성해주세요.", "알림", JOptionPane.WARNING_MESSAGE);
 				UserInfo.setText("사용자 : Guest");
 				if(JOptionPane.YES_OPTION == 0) {
 					SwingUtilities.invokeLater(new Runnable(){
@@ -310,12 +297,10 @@ public class main_home extends JFrame {
 						}
 					});
 				}
-				else if(JOptionPane.NO_OPTION == 0) System.exit(0);
-=======
-				});
->>>>>>> branch 'master' of https://github.com/YJongSeop/pj_health
+				else if (result == 2) System.exit(0);
 			}
-			else if (result == 2) System.exit(0);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
