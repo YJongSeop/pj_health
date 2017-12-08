@@ -53,9 +53,13 @@ public class main_home extends JFrame {
 	
 	//전역 선언
 	JLabel infoClock;
+	static JLabel UserInfo;
 	JTextArea textArea1;
 	JTextArea textArea2;
 	JTextArea textArea3;
+	
+	static String[] info = null;
+	static String str = null;
 	
 	public static void main(String[] args) {
 		LoadUserInfo();
@@ -97,10 +101,6 @@ public class main_home extends JFrame {
 		JMenuItem mnMenu_Info_2 = new JMenuItem("개인정보 수정");
 		mnMenu_Info_2.addActionListener(action);
 		mnMenu_Info.add(mnMenu_Info_2);
-		
-		JMenuItem mnMenu_Info_3 = new JMenuItem("추가 데이터 입력");
-		mnMenu_Info_3.addActionListener(action);
-		mnMenu_Info.add(mnMenu_Info_3);
 		
 		JMenu mnMenu_Info2 = new JMenu("영양소");
 		mnMenu.add(mnMenu_Info2);
@@ -201,10 +201,16 @@ public class main_home extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				JOptionPane.showMessageDialog(null, "내용을 다시 불러왔습니다.", "알림", JOptionPane.INFORMATION_MESSAGE, null);
 				CheckMainMethod();
+				CheckUser();
 			}
 		});
 		btReload.setBounds(515, 12, 77, 23);
 		myPanel.add(btReload);
+		
+		UserInfo = new JLabel("사용자 :");
+		UserInfo.setBounds(422, 12, 87, 18);
+		myPanel.add(UserInfo);
+		CheckUser();
 		
 		ThreadControl threadCnl = new ThreadControl(); //스레드 시작, 현재 시간 표시
 		threadCnl.start();
@@ -266,21 +272,24 @@ public class main_home extends JFrame {
 	
 	private static void LoadUserInfo() {
 		try {
-			File f = new File("User.txt");
+			File f = new File("Users.txt");
 			if(f.exists()) {
-				BufferedReader in = new BufferedReader(new FileReader("User.txt"));
-				String line = null;
-				String[] splitedStr = null;
-				while((line = in.readLine()) != null) {
-					splitedStr = null;
-					splitedStr = line.split("\t");
-					for(int i = 0; i < splitedStr.length; i++) {
-						splitedStr[i] = splitedStr[i].trim();
+				BufferedReader reader = new BufferedReader(new FileReader("Users.txt"));
+				
+				String line = "";
+				
+				while((line = reader.readLine()) != null) {
+					info = line.split("\n");
+				
+					for(int i = 0; i < info.length; i++) {
+						info[i] = info[i].trim();
+						str= info[i];
 					}
 				}
-				in.close();
+				reader.close();
 			} else {
 				JOptionPane.showConfirmDialog(null, "데이터가 없습니다. 가입서를 작성해주세요.", "알림", JOptionPane.WARNING_MESSAGE);
+				UserInfo.setText("사용자 : Guest");
 				if(JOptionPane.YES_OPTION == 0) {
 					SwingUtilities.invokeLater(new Runnable(){
 						public void run(){
@@ -288,12 +297,39 @@ public class main_home extends JFrame {
 						}
 					});
 				}
-				else System.exit(0);
+				else if(JOptionPane.NO_OPTION == 0) System.exit(0);
 			}
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	private static void CheckUser() {
+		try {
+			File f = new File("Users.txt");
+			if(f.exists()) {
+				BufferedReader reader = new BufferedReader(new FileReader("Users.txt"));
+				
+				String line = "";
+				
+				while((line = reader.readLine()) != null) {
+					info = line.split("\n");
+				
+					for(int i = 0; i < info.length; i++) {
+						info[i] = info[i].trim();
+						str= info[i];
+					}
+				}
+				reader.close();
+				
+				String[] result = str.split(",");
+				UserInfo.setText("사용자 : " + result[0]);
+			} else UserInfo.setText("사용자 : Guest");
+		}catch(IOException e) {
+					e.printStackTrace();
+		}
+	}
+	
 	
 	class MyActionListener implements ActionListener {
 		public void actionPerformed (ActionEvent e) {

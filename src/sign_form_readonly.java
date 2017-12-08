@@ -16,6 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 public class sign_form_readonly extends JFrame {
@@ -26,7 +27,8 @@ public class sign_form_readonly extends JFrame {
 	 JTextField txt4;
 	 JTextField txt5;
 	 
-	 String[] info;
+	 String[] info = null;
+	 String str = null;
 
 	public sign_form_readonly() {
 		setResizable(false);
@@ -39,31 +41,35 @@ public class sign_form_readonly extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		try{
+			UIManager.setLookAndFeel ("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"); //LookAndFeel Windows 스타일 적용
+			SwingUtilities.updateComponentTreeUI(getContentPane()) ;
+		}catch(Exception e){
+			//bottomInfo.setText("ERROR : LookAndFeel setting failed");
+		}
+				
 		try {
 			File f = new File("Users.txt");
 			BufferedReader reader = new BufferedReader(new FileReader("Users.txt"));
 			
-			String line = null;
-			String[] splitedStr = null;
+			String line = "";
+			
 			while((line = reader.readLine()) != null) {
-				splitedStr = null;
-				splitedStr = line.split("\t");
-				
-				for(int i = 0; i < splitedStr.length; i++) {
-					splitedStr[i] = splitedStr[i].trim();
-					//splitedStr[i] = info[i];
+				info = line.split("\n");
+			
+				for(int i = 0; i < info.length; i++) {
+					info[i] = info[i].trim();
+					str= info[i];
 				}
-				reader.close();
 			}
+			reader.close();
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
-		txt1.setText(info[0]);
-		txt2.setText(info[1]);
-		txt3.setText(info[2]);
-		txt4.setText(info[3]);
-		txt5.setText(info[4]);
 		
+		//, 단위로 끊어서 정보를 집어넣는다.
+		String[] result = str.split(",");
+			
 		JLabel labelTop = new JLabel("회원가입 정보 확인창");
 		labelTop.setHorizontalAlignment(SwingConstants.CENTER);
 		labelTop.setBounds(0, 0, 281, 18);
@@ -91,38 +97,38 @@ public class sign_form_readonly extends JFrame {
 		
 		txt1 = new JTextField();
 		txt1.setEditable(false);
-		txt1.setEnabled(false);
 		txt1.setBounds(79, 28, 202, 22);
 		contentPane.add(txt1);
 		txt1.setColumns(10);
+		txt1.setText(result[0]); // 객체 선언 이전에는 절대로 값을 넣으면 안된다 -> NullPointerException의 원인
 		
 		txt2 = new JTextField();
 		txt2.setEditable(false);
-		txt2.setEnabled(false);
 		txt2.setColumns(10);
 		txt2.setBounds(79, 54, 202, 22);
 		contentPane.add(txt2);
+		txt2.setText(result[1]);
 		
 		txt3 = new JTextField();
 		txt3.setEditable(false);
-		txt3.setEnabled(false);
 		txt3.setColumns(10);
 		txt3.setBounds(79, 82, 202, 22);
 		contentPane.add(txt3);
+		txt3.setText(result[2]);
 		
 		txt4 = new JTextField();
 		txt4.setEditable(false);
-		txt4.setEnabled(false);
 		txt4.setColumns(10);
 		txt4.setBounds(79, 110, 202, 22);
 		contentPane.add(txt4);
+		txt4.setText(result[3]);
 		
 		txt5 = new JTextField();
 		txt5.setEditable(false);
-		txt5.setEnabled(false);
 		txt5.setBounds(108, 140, 173, 22);
 		contentPane.add(txt5);
 		txt5.setColumns(10);
+		txt5.setText(result[4]);
 	}
 	
 	public static void main(String[] args) {

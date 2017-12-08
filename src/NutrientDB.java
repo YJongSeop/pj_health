@@ -1,5 +1,7 @@
 import java.awt.Color;
-import java.awt.Point;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,7 +15,6 @@ import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import java.awt.Font;
 
 public class NutrientDB  extends JFrame{
 	String[] listValues = new String[] {"탄수화물", "지방", "단백질", "무기염류", "비타민 A", "비타민 D", 
@@ -25,10 +26,13 @@ public class NutrientDB  extends JFrame{
 	JScrollPane scrollPane;
 	JTextArea textArea;
 	
+	Toolkit tk = Toolkit.getDefaultToolkit();
+	Dimension ScreenSize = tk.getScreenSize();
+	
 	public NutrientDB() {
 		setSize(600,500);
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setTitle("영양소 사전");
 		getContentPane().setLayout(null);

@@ -63,7 +63,7 @@ public class sign_form extends JFrame {
 		label_3.setBounds(12, 112, 55, 18);
 		contentPane.add(label_3);
 		
-		JLabel label_5 = new JLabel("섭취 불가 음식 :");
+		JLabel label_5 = new JLabel("기타사항 :");
 		label_5.setBounds(12, 143, 104, 18);
 		contentPane.add(label_5);
 		
@@ -103,7 +103,7 @@ public class sign_form extends JFrame {
 				String St_txt4 = txt4.getText();
 				String St_txt5 = txt5.getText();
 				
-				String info = St_txt1 + "\t" + St_txt2 + "\t" + St_txt3 + "\t" + St_txt4 + "\t" + St_txt5;
+				String info = St_txt1 + "," + St_txt2 + "," + St_txt3 + "," + St_txt4 + "," + St_txt5;
 				try {
 				File f = new File("Users.txt");
 					if(info.length() > 0) {
